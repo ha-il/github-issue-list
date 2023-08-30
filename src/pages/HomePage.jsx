@@ -1,11 +1,7 @@
 import IssueList from '../components/issue/IssueList';
 
 function HomePage() {
-  return (
-    <section>
-      <IssueList />
-    </section>
-  );
+  return <IssueList />;
 }
 
 export default HomePage;
