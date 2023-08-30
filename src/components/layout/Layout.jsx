@@ -1,3 +1,5 @@
+import { styled } from 'styled-components';
+
 import Header from './Header';
 
 const { Outlet } = require('react-router-dom');
@@ -5,12 +7,16 @@ const { Outlet } = require('react-router-dom');
 function Layout() {
   return (
     <>
-      <main>
-        <Header />
+      <Header />
+      <Main>
         <Outlet />
-      </main>
+      </Main>
     </>
   );
 }
+
+const Main = styled.main`
+  padding: 0 2rem;
+`;
 
 export default Layout;
