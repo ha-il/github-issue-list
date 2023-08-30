@@ -13,7 +13,7 @@ function IssueInfo({ issue }) {
 
   return (
     <IssueInfoStyle>
-      <div>
+      <div className='meta'>
         <h2>
           #{number} {title}
         </h2>
@@ -21,7 +21,7 @@ function IssueInfo({ issue }) {
           작성자: {login}, 작성일: {formatDate(updated_at)}
         </span>
       </div>
-      <div>코멘트: {comments}</div>
+      <div className='comments'>코멘트: {comments}</div>
     </IssueInfoStyle>
   );
 }
@@ -33,6 +33,10 @@ const IssueInfoStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  & .meta {
+    width: 85%;
+  }
 `;
 
 export default IssueInfo;
