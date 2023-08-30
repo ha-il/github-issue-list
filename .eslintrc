@@ -3,7 +3,7 @@
     "es6": true
   },
   "extends": ["react-app", "eslint:recommended", "prettier"],
-  "plugins": ["react", "import", "no-relative-import-paths"],
+  "plugins": ["react", "import"],
   "rules": {
     "no-var": "error",
     "no-multiple-empty-lines": "error",
@@ -11,11 +11,6 @@
     "eqeqeq": "error",
     "dot-notation": "error",
     "no-unused-vars": "error",
-    "@typescript-eslint/no-empty-function": "off",
-    "no-relative-import-paths/no-relative-import-paths": [
-      "error",
-      { "allowSameFolder": true, "rootDir": "src" }
-    ],
     "import/order": [
       "error",
       {
