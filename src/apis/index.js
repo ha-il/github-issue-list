@@ -5,7 +5,9 @@ export const REPO_INFO = {
   repository: 'react',
 };
 
-const octokit = new Octokit({});
+const octokit = new Octokit({
+  auth: process.env.GITHUB_REST_API_TOKEN,
+});
 export const getIssues = async page => {
   try {
     const request = await octokit.request(
