@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -8,6 +7,7 @@ import { getIssueDetail } from '../../apis';
 import Message from '../common/Message';
 import IssueDetailSkeleton from '../common/Skeletons/IssueDetailSkeleton';
 
+import IssueBody from './IssueBody';
 import IssueInfo from './IssueInfo';
 
 function IssueDetail() {
@@ -43,7 +43,7 @@ function IssueDetail() {
             <img src={issue.user.avatar_url} alt='avatar' />
             <IssueInfo issue={issue} />
           </IssueHeader>
-          <ReactMarkdown>{issue.body}</ReactMarkdown>
+          <IssueBody issueBody={issue.body} />
         </>
       )}
     </>
