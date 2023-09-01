@@ -5,37 +5,39 @@ import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 import { getIssueDetail } from '../../apis';
+import Message from '../common/Message';
 import IssueDetailSkeleton from '../common/Skeletons/IssueDetailSkeleton';
 
 import IssueInfo from './IssueInfo';
 
 function IssueDetail() {
   const [issue, setIssue] = useState({});
-  const [isLoading, setisLoading] = useState(true);
-  const [fetchingError, setFetchingError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const { issueNumber } = useParams();
 
-  useEffect(() => {
-    setisLoading(true);
-    // TODO: 에러 핸들링 하려고 했으나, 에러가 apis/index.js 파일에서 발생하여 런타임 에러로 여기까지 에러 전파가 안됨.
+  const fetchIssueDetail = async page => {
     try {
-      getIssueDetail(issueNumber).then(res => {
-        if (res.status !== 200)
-          throw new Error('이슈 목록을 불러오는 과정에서 에러가 발생했습니다.');
-        setIssue(res.data);
-        setisLoading(false);
-      });
+      setErrorMessage('');
+      setIsLoading(true);
+      const { data } = await getIssueDetail(issueNumber);
+      setIssue(data);
     } catch (error) {
-      setFetchingError(error);
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    fetchIssueDetail();
   }, []);
 
   return (
     <>
-      {fetchingError && <p>{fetchingError}</p>}
-      {isLoading ? (
-        <IssueDetailSkeleton />
-      ) : (
+      {errorMessage && <Message message={errorMessage} />}
+      {isLoading && <IssueDetailSkeleton />}
+      {Object.keys(issue).length === 0 || (
         <>
           <IssueHeader>
             <img src={issue.user.avatar_url} alt='avatar' />

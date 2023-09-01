@@ -4,31 +4,39 @@ import { styled } from 'styled-components';
 
 import { getIssues } from '../../apis';
 import { sliceArray } from '../../utils';
-import IssueListSkeleton from '../common/Skeletons/IssueListSkeleton';
+import Message from '../common/Message';
 
 import IssueGroup from './IssueGroup';
 
-// TODO: 로딩화면 -> 이슈리스트 순서대로 렌더링이 되어야 하는데, 로딩화면 -> 빈화면 -> 이슈리스트 순서대로 렌더링 중. 고쳐야함
 function IssueList() {
   const [issues, setIssues] = useState([]);
-  const [isFetching, setFetching] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const fetchIssues = (page, perPage = 8) => {
-    getIssues(page, perPage).then(res => setIssues(prev => [...prev, ...res.data]));
-    setFetching(false);
+  const fetchIssues = async page => {
+    try {
+      setErrorMessage('');
+      setIsLoading(true);
+      const { data } = await getIssues(page);
+      setIssues(prev => [...prev, ...data]);
+      setPageNumber(prev => prev + 1);
+    } catch (error) {
+      setErrorMessage(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchIssues(pageNumber);
-  }, [pageNumber]);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, offsetHeight } = document.documentElement;
       if (window.innerHeight + scrollTop >= offsetHeight) {
-        setFetching(true);
-        setPageNumber(prev => prev + 1);
+        fetchIssues(pageNumber);
       }
     };
     window.addEventListener('scroll', handleScroll);
@@ -41,10 +49,11 @@ function IssueList() {
 
   return (
     <IssueListContainer>
+      {errorMessage && <Message message={errorMessage} />}
       {slicedIssuesArray.map((slicedIssues, idx) => (
-        <IssueGroup slicedIssues={slicedIssues} key={idx} isIssuesFetching={isFetching} />
+        <IssueGroup slicedIssues={slicedIssues} key={idx} />
       ))}
-      {isFetching && <IssueListSkeleton />}
+      {isLoading && <Message message={'로딩 중입니다...'} />}
     </IssueListContainer>
   );
 }
