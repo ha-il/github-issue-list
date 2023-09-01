@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
+import { REPO_INFO } from '../../apis';
+
 function Header() {
   return (
     <HeaderStyle>
       <Link to='/'>
-        <h1>facebook / react</h1>
+        <h1>{`${REPO_INFO.organization} / ${REPO_INFO.repository}`}</h1>
       </Link>
     </HeaderStyle>
   );

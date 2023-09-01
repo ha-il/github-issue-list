@@ -16,10 +16,16 @@ function Issue({ issue }) {
 
 const IssueContainer = styled.li`
   list-style: none;
-  padding-bottom: 1rem 0;
+
   & a {
     color: black;
     text-decoration: none;
+  }
+  &:hover {
+    & a div {
+      background-color: whitesmoke;
+      color: #005b99;
+    }
   }
 `;
 
