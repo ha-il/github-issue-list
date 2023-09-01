@@ -6,7 +6,7 @@ import { throttle } from '../utils';
 const useInfiniteScroll = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [issues, setIssues] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   const fetchIssues = useCallback(
