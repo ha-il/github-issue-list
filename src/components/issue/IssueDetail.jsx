@@ -5,9 +5,9 @@ import { styled } from 'styled-components';
 
 import { getIssueDetail } from '../../apis';
 import Message from '../common/Message';
-import IssueDetailSkeleton from '../common/Skeletons/IssueDetailSkeleton';
 
 import IssueBody from './IssueBody';
+import IssueDetailSkeleton from './IssueDetailSkeleton';
 import IssueInfo from './IssueInfo';
 
 function IssueDetail() {
